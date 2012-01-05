@@ -22,6 +22,15 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 		<url-pattern>/seatreservationkeybased/*</url-pattern>
 	</servlet-mapping>
 	
+	<servlet>
+		<servlet-name>Counter</servlet-name>
+		<servlet-class>com.lavadip.gaetest.seatreservation.CounterServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Counter</servlet-name>
+		<url-pattern>/counter/*</url-pattern>
+	</servlet-mapping>
+	
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
 	</welcome-file-list>
