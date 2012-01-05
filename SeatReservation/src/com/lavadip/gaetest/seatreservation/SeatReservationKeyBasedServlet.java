@@ -7,6 +7,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.*;
 
 import java.util.ConcurrentModificationException;
+import java.util.LinkedList;
+
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
@@ -53,15 +55,15 @@ public class SeatReservationKeyBasedServlet extends HttpServlet {
 				resp.getWriter().println("{result:\"illegal_seat_request\"}");
 			}
 		} else if ("/clearAll".equals(path)) {
-			int count = 0;
 			final Query query = new Query(SEAT_ENTITY_NAME, seatsRootKey);
 			query.setKeysOnly();
 			final PreparedQuery prepQuery = datastore.prepare(query);
+			final LinkedList<Key> keys = new LinkedList<Key>();
 			for (Entity e : prepQuery.asIterable()) {
-				datastore.delete(e.getKey());
-				count++;
+				keys.add(e.getKey());
 			}
-			resp.getWriter().println(String.format("{result:\"cleared\", count:%d}", count));
+			datastore.delete(keys);
+			resp.getWriter().println(String.format("{result:\"cleared\", count:%d}", keys.size()));
 		} else {
 			resp.getWriter().println("{result:\"invalid api\"}");
 		}
