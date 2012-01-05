@@ -2,8 +2,8 @@ import os
 import subprocess
 
 # Which server to use:
-serverPath = "http://gaetxtest.appspot.com"
 serverPath = "http://localhost:8888"
+serverPath = "http://gaetxtest.appspot.com"
 
 # Which of the servelets to test:
 apiPath = "/seatreservation"

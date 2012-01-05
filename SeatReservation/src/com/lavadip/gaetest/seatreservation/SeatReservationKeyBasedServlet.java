@@ -29,7 +29,7 @@ public class SeatReservationKeyBasedServlet extends HttpServlet {
 		final PrintWriter writer = resp.getWriter();
 		writer.println("[");
 		for (final Entity seat : seats.asIterable()) {
-			writer.println(String.format("{ownerName:\"%s\", seatId:\"%s\"}", seat.getProperty("ownerName"), seat.getKey().getName()));
+			writer.println(String.format("{ownerName:\"%s\", seatId:\"%s\"},", seat.getProperty("ownerName"), seat.getKey().getName()));
 		}
 		writer.println("]");
 	}
