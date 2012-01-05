@@ -12,7 +12,6 @@ import com.google.appengine.api.memcache.MemcacheService;
 import com.google.appengine.api.memcache.MemcacheService.SetPolicy;
 import com.google.appengine.api.memcache.MemcacheServiceFactory;
 
-import java.util.ConcurrentModificationException;
 import java.util.Random;
 
 /**
@@ -59,8 +58,7 @@ public final class ShardedCounter {
     private static final String COUNT = "count";
   }
 
-  private static final DatastoreService ds = DatastoreServiceFactory
-      .getDatastoreService();
+  private static final DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
 
   /** Default number of shards. */
   private static final int INITIAL_SHARDS = 5;
@@ -148,8 +146,6 @@ public final class ShardedCounter {
     }
   }
   
-  volatile long missedCount = 0;
-
   /**
    * Increment datastore property value inside a transaction. If the entity with
    * the provided key does not exist, instead create an entity with the supplied
@@ -161,25 +157,26 @@ public final class ShardedCounter {
    * @param initialValue the value to use if the entity does not exist
    */
   private void incrementPropertyTx(final Key key, final String prop, final long increment, final long initialValue) {
-  	try {
-	    final Transaction tx = ds.beginTransaction();
-	    Entity thing;
-	    long value;
-	    try {
-	      thing = ds.get(tx, key);
-	      value = (Long) thing.getProperty(prop) + increment;
-	    } catch (final EntityNotFoundException e) {
-	      thing = new Entity(key);
-	      value = initialValue;
-	    }
-	    thing.setUnindexedProperty(prop, value);
-	    ds.put(tx, thing);
-	    tx.commit();
-  	} catch (final ConcurrentModificationException e) {
-  		System.out.println("Sharded Counter: Unbelievablely, we are missing a crucial exception!");
-  		synchronized(this) {
-	  		missedCount++;
-      }
-  	}
+    final Transaction tx = ds.beginTransaction();
+    Entity thing;
+    long value;
+    try {
+      thing = ds.get(tx, key);
+      value = (Long) thing.getProperty(prop) + increment;
+    } catch (final EntityNotFoundException e) {
+      thing = new Entity(key);
+      value = initialValue;
+    }
+    thing.setUnindexedProperty(prop, value);
+    ds.put(tx, thing);
+    tx.commit();
+  }
+  
+  void clearAllData() {
+    final Query query = new Query(kind);
+    for (final Entity shard : ds.prepare(query).asIterable()) {
+      ds.delete(shard.getKey());
+    }
+    mc.delete(kind);
   }
 }

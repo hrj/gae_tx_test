@@ -4,19 +4,22 @@ import subprocess
 import time
 
 # Which server to use:
-serverPath = "http://gaetxtest.appspot.com"
 serverPath = "http://localhost:8888"
+serverPath = "http://gaetxtest.appspot.com"
 
 # Which of the servelets to test:
 apiPath = "/counter"
 
 # Amount of time (seconds) to sleep between requests. Use negative value to completely disable sleep
-sleepDuration = 0.1
+sleepDuration = -10.1
 
 # Clear all Data first
-#os.spawnlp(os.P_WAIT, 'curl', 'curl', '--data', "dummy=dummy", serverPath+apiPath+"/clearAll")
+os.spawnlp(os.P_WAIT, 'curl', 'curl', '--data', "dummy=dummy", serverPath+apiPath+"/clearAll")
 
-mobSize = 100
+mobSize = 400
+
+print "Settings:"
+print "Server path:", serverPath
 
 for i in range(mobSize):
   data = 'dummy=dummy'
