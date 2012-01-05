@@ -74,7 +74,7 @@ public class SeatReservationBadKeyServlet extends HttpServlet {
   final static DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 
   static {
-    final Entity rootEntity = new Entity("SeatsRoot", "seats_root_keybased"); // we want only one of these entities to ever exist
+    final Entity rootEntity = new Entity("SeatsRoot", "seats_root_badkey"); // we want only one of these entities to ever exist
     datastore.put(rootEntity);
     seatsRootKey = rootEntity.getKey();
   }
