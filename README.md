@@ -25,6 +25,9 @@ The API is defined below.
 ### POST /increment
 Causes the counter within the servlet to increment
 
+### POST /clearAll
+Clears all counter servlet data. Useful when beginning a test.
+
 ### GET /
 Returns the current count, the number of shards and the number of missed exceptions.
 
