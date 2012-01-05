@@ -43,9 +43,9 @@ public class SeatReservationServlet extends HttpServlet {
 			final String seatId = req.getParameter("seatId");
 			final int seatNum = Integer.parseInt(seatId.substring(1));
 			if (seatId.startsWith("s") && seatNum > 0 && seatNum <= 500) {
-				final boolean success = reserveSeat(ownerName, seatId);
-				if (success) {
-					resp.getWriter().println(String.format("{result:\"seat_reserved\", ownerName:\"%s\", seatId:\"%s\"}", ownerName, seatId));
+				final int successNRetries = reserveSeat(ownerName, seatId);
+				if (successNRetries >= 0) {
+					resp.getWriter().println(String.format("{result:\"seat_reserved\", ownerName:\"%s\", seatId:\"%s\", retries:%d}", ownerName, seatId, successNRetries));
 				} else {
 					resp.getWriter().println(String.format("{result:\"seat_taken\", seatId:\"%s\"}", seatId));
 				}
@@ -77,15 +77,20 @@ public class SeatReservationServlet extends HttpServlet {
     seatsRootKey = rootEntity.getKey();
   }
 
-  public boolean reserveSeat(final String ownerName, final String seatId) {
+  public int reserveSeat(final String ownerName, final String seatId) {
   	for (int i = 0; i < 40; i++) {
 	    try {
-	      return reserveSeatAttempt(ownerName, seatId);
+	      final boolean success = reserveSeatAttempt(ownerName, seatId);
+	      if (success) {
+	      	return i;
+	      } else {
+	      	return -1;
+	      }
 	    } catch (final ConcurrentModificationException cme) {
 	    	try { Thread.sleep(50); } catch (InterruptedException e) {}
 	    }
   	}
-    return false;
+    return -1;
   }
 
   private boolean reserveSeatAttempt(final String ownerName, final String seatId) throws ConcurrentModificationException {
