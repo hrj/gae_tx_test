@@ -17,7 +17,7 @@ However, towards the end of the post there was a limitation mentioned that was a
 
 I am a newbiew to GAE but I think this part of the post is wrong; my take:
 
-1. The pre-exists check can be just a key lookup. Hence, there is no need to create another redundant parameter which is a copy of the key.
+1. The pre-exists check can be just a key lookup. Hence, there is no need to create a redundant property which is a copy of the key.
 2. The pre-exists check can be any ancestor query as well. And this means you can have multiple unique constraints in the same entity group.
 
 The only limitation I see is that transactions only work within an entity group. So the uniqueness check
