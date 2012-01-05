@@ -23,6 +23,15 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	</servlet-mapping>
 	
 	<servlet>
+		<servlet-name>SeatReservationBadKey</servlet-name>
+		<servlet-class>com.lavadip.gaetest.seatreservation.SeatReservationBadKeyServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>SeatReservationBadKey</servlet-name>
+		<url-pattern>/seatreservation_badkey/*</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
 		<servlet-name>Counter</servlet-name>
 		<servlet-class>com.lavadip.gaetest.seatreservation.CounterServlet</servlet-class>
 	</servlet>

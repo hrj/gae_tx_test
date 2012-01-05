@@ -176,7 +176,7 @@ public final class ShardedCounter {
 	    ds.put(tx, thing);
 	    tx.commit();
   	} catch (final ConcurrentModificationException e) {
-  		System.out.println("Unbelievablely, we are missing this exception!");
+  		System.out.println("Sharded Counter: Unbelievablely, we are missing a crucial exception!");
   		synchronized(this) {
 	  		missedCount++;
       }
