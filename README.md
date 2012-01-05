@@ -47,7 +47,7 @@ Output is JSON. Different output possibilities are:
 
 ### GET {servletpath}
 Output: JSON array containing all reservations. Eg:
-`[ {ownerName:"moby", seatId:"10A"}, {...}, .... ]`
+`[ {ownerName:"moby", seatId:"s10"}, {...}, .... ]`
 
 ### POST {servletpath}/clearAll
 This will clear all reservations. Can be called before starting a stress test.
