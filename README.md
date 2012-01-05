@@ -28,6 +28,7 @@ when you need some properties to be unique.
 When I posted the above concerns on Broc's blog, Broc suggeted that I try out my ideas in code. Hence this project. Along with test code that tries to mimic a large mob reserving a set of limited seats.
 
 In the project are two servlets that respond to the same API. The API is described futher down. The two servlets paths are:
+
 1. `/seatreservation/`  Uses the original code from Broc's blog post.
 2. `/seatreservationkeybased/` Similar to above but uses a key lookup
 
