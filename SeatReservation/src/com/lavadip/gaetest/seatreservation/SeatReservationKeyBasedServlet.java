@@ -92,8 +92,8 @@ public class SeatReservationKeyBasedServlet extends HttpServlet {
     final Transaction txn = datastore.beginTransaction();
     try {
       try {
-	      final Entity exists = datastore.get(KeyFactory.createKey(seatsRootKey, SEAT_ENTITY_NAME, seatId));
-        return false;
+	      final Entity exists = datastore.get(txn, KeyFactory.createKey(seatsRootKey, SEAT_ENTITY_NAME, seatId));
+        return exists == null;		// Should never be null, hence should return false.
       } catch (EntityNotFoundException e) {
         final Entity seatEntity = new Entity(SEAT_ENTITY_NAME, seatId, seatsRootKey);
         seatEntity.setProperty("ownerName", ownerName);
