@@ -24,7 +24,7 @@ The only limitation I see is that transactions only work within an entity group.
 is only effective within the entity group. Hence, you need to carefully plan out the ancestor path of an entity
 when you need some properties to be unique.
 
-## Code demo
+# Code demo
 When I posted the above concerns on Broc's blog, Broc suggeted that I try out my ideas in code. Hence this project. Along with test code that tries to mimic a large mob reserving a set of limited seats.
 
 In the project are two servlets that respond to the same API. The API is described futher down. The two servlets paths are:
