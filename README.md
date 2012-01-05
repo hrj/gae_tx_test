@@ -1,11 +1,11 @@
-# GAE transactions and unique key constraints
+# GAE transactions and unique property constraints
 
 ## Introduction
 While I was learning about the concept of Transactions on the Google App Engine data store
 I came across this [interesting blog][bp] post by Broc Seib. In that post Broc describes
-a method of implementing a Unique Key constraint by using transactions. In a nutshell the idea is
-to check for existing entities with the same property value before inserting / updating an entity with
-the same property value.
+a method of implementing a Unique property constraint by using transactions. In a nutshell the idea is
+to check for existing entities with the same property value in a transaction before inserting / updating an entity with
+the same property value. This was a nice post and I learnt several things from it.
 
 However, towards the end of the post there was a limitation mentioned that was a little jarring. Quoting:
 
